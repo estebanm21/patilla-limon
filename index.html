@@ -1,271 +1,303 @@
-
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Patylla & Limón - Encuesta The Box</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patylla & Limón - Encuesta The Box</title>
 
-  <link rel="icon" type="image/x-icon" href="./assets/ico.ico">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/x-icon" href="./assets/ico.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- EmailJS -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function () {
+        emailjs.init("VJhVKBG1BZCFAmlxb"); // Reemplaza con tu Public Key
+      })();
+    </script>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("VJhVKBG1BZCFAmlxb"); // Reemplaza con tu Public Key
-    })();
-  </script>
+    <style>
+      :root {
+        --accent: #f8b500;
+        --bg: #fffaf0;
+        --text: #333;
+        --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
 
-  <style>
-    :root {
-      --accent: #f8b500;
-      --bg: #fffaf0;
-      --text: #333;
-      --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
 
-    * {
-      box-sizing: border-box;
-      font-family: 'Quicksand', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+      body {
+        background: linear-gradient(135deg, #fceabb, #f8b500);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+        padding: 2rem;
+      }
 
-    body {
-      background: linear-gradient(135deg, #fceabb, #f8b500);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding: 2rem;
-    }
+      .form-wrapper {
+        background: var(--bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        max-width: 800px;
+        width: 100%;
+        padding: 2rem;
+        animation: fadeIn 1s ease-in-out;
+      }
 
-    .form-wrapper {
-      background: var(--bg);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      max-width: 800px;
-      width: 100%;
-      padding: 2rem;
-      animation: fadeIn 1s ease-in-out;
-    }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+      h1,
+      h2 {
+        text-align: center;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
 
-    h1, h2 {
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
+      section {
+        margin-bottom: 2rem;
+        animation: fadeIn 1s ease-in-out;
+      }
 
-    section {
-      margin-bottom: 2rem;
-      animation: fadeIn 1s ease-in-out;
-    }
+      label {
+        display: block;
+        margin: 0.8rem 0 0.3rem;
+        font-weight: 600;
+      }
 
-    label {
-      display: block;
-      margin: 0.8rem 0 0.3rem;
-      font-weight: 600;
-    }
+      input[type="text"],
+      input[type="email"],
+      textarea,
+      select,
+      input[type="number"] {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 10px;
+        border: 2px solid var(--accent);
+        outline: none;
+        transition: 0.3s;
+        background: white;
+      }
 
-    input[type="text"], input[type="email"], textarea, select, input[type="number"] {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 10px;
-      border: 2px solid var(--accent);
-      outline: none;
-      transition: 0.3s;
-      background: white;
-    }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        background: #fff8e7;
+        border-color: #d48f00;
+      }
 
-    input:focus, textarea:focus, select:focus {
-      background: #fff8e7;
-      border-color: #d48f00;
-    }
+      textarea {
+        resize: vertical;
+      }
 
-    textarea {
-      resize: vertical;
-    }
+      .radio-group,
+      .check-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 0.5rem 0;
+      }
 
-    .radio-group, .check-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 0.5rem 0;
-    }
+      .radio-group label,
+      .check-group label {
+        font-weight: normal;
+      }
 
-    .radio-group label, .check-group label {
-      font-weight: normal;
-    }
+      button {
+        background: var(--accent);
+        border: none;
+        color: white;
+        padding: 0.9rem;
+        font-size: 1rem;
+        width: 100%;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 2rem;
+      }
 
-    button {
-      background: var(--accent);
-      border: none;
-      color: white;
-      padding: 0.9rem;
-      font-size: 1rem;
-      width: 100%;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 2rem;
-    }
+      button:hover {
+        background: #d48f00;
+      }
 
-    button:hover {
-      background: #d48f00;
-    }
-
-    .container_img {
-      
+      .container_img {
         width: 100px;
         height: 100px;
-        ;
-    }
-    .container_img img{
-      width: 100%;
-      
-    }
+      }
+      .container_img img {
+        width: 100%;
+      }
 
-    .conainer_title{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-
- 
-</head>
-<body>
-  <div class="form-wrapper">
-    <div class="conainer_title">
-      <h1>Patylla & Limón</h1>
-      <div class="container_img">
-        <img src="./assets/logo.png" alt="Logo">
+      .conainer_title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <div class="conainer_title">
+        <h1>Patilla & Limón</h1>
+        <div class="container_img">
+          <img src="./assets/logo.png" alt="Logo" />
+        </div>
       </div>
+      <h2>Encuesta de Satisfacción - The Box</h2>
+
+      <form id="encuesta-form">
+        <section>
+          <h3>1. Calidad del Producto</h3>
+
+          <label>¿Cómo calificarías la calidad del producto? (1 a 10)</label>
+          <input type="number" name="calidad" min="1" max="10" required />
+
+          <label
+            >¿Qué te ha parecido el acabado y la decoración de la cajita?</label
+          >
+          <select name="decoracion" required>
+            <option value="">Selecciona una opción</option>
+            <option>Excelente</option>
+            <option>Bueno</option>
+            <option>Regular</option>
+            <option>Malo</option>
+            <option>Muy malo</option>
+          </select>
+
+          <label>¿La cajita cumple con tus expectativas?</label>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="expectativas" value="sí" required />
+              Sí</label
+            >
+            <label
+              ><input type="radio" name="expectativas" value="no" /> No</label
+            >
+          </div>
+
+          <label>Si no, ¿por qué?</label>
+          <textarea name="por_que_no_expectativas" rows="2"></textarea>
+
+          <label>¿El material de la cajita es adecuado?</label>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="material" value="sí" required />
+              Sí</label
+            >
+            <label><input type="radio" name="material" value="no" /> No</label>
+          </div>
+
+          <label>Si no, ¿qué cambiarías?</label>
+          <textarea name="cambios_material" rows="2"></textarea>
+        </section>
+
+        <section>
+          <h3>2. Satisfacción General</h3>
+
+          <label>¿Cómo calificarías tu satisfacción general? (1 a 10)</label>
+          <input
+            type="number"
+            name="satisfaccion_general"
+            min="1"
+            max="10"
+            required />
+
+          <label>¿Qué fue lo que más te gustó?</label>
+          <textarea name="lo_que_mas_gusto" rows="2"></textarea>
+
+          <label>¿Hay algo que mejorarías?</label>
+          <textarea name="que_mejorarias" rows="2"></textarea>
+        </section>
+
+        <section>
+          <h3>3. Recomendaciones</h3>
+
+          <label>¿Recomendarías nuestras cajitas a otras personas?</label>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="recomienda" value="sí" required />
+              Sí</label
+            >
+            <label
+              ><input type="radio" name="recomienda" value="no" /> No</label
+            >
+          </div>
+
+          <label
+            >¿Qué otras temáticas te gustaría ver en nuestras cajitas?</label
+          >
+          <textarea name="tematicas_sugeridas" rows="2"></textarea>
+        </section>
+
+        <section>
+          <h3>4. Datos opcionales</h3>
+
+          <label>Tu nombre (opcional)</label>
+          <input type="text" name="nombre_usuario" />
+
+          <label>Tu correo (opcional)</label>
+          <input type="text" name="correo_usuario" />
+        </section>
+
+        <button type="submit">Enviar respuestas</button>
+      </form>
     </div>
-    <h2>Encuesta de Satisfacción - The Box</h2>
 
-    <form id="encuesta-form">
-      <section>
-        <h3>1. Calidad del Producto</h3>
+    <script>
+      // document.getElementById("encuesta-form").addEventListener("submit", function(e) {
+      //   e.preventDefault();
 
-        <label>¿Cómo calificarías la calidad del producto? (1 a 10)</label>
-        <input type="number" name="calidad" min="1" max="10" required>
+      //   emailjs.sendForm('service_i3tcowf', 'template_i3u2tbk', this)
+      //     .then(function() {
+      //       alert("¡Formulario enviado con éxito!");
+      //       document.getElementById("encuesta-form").reset();
+      //     }, function(error) {
+      //       alert("Hubo un error al enviar el formulario.");
+      //       console.log(error);
+      //     });
+      // });
 
-        <label>¿Qué te ha parecido el acabado y la decoración de la cajita?</label>
-        <select name="decoracion" required>
-          <option value="">Selecciona una opción</option>
-          <option>Excelente</option>
-          <option>Bueno</option>
-          <option>Regular</option>
-          <option>Malo</option>
-          <option>Muy malo</option>
-        </select>
+      document
+        .getElementById("encuesta-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-        <label>¿La cajita cumple con tus expectativas?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="expectativas" value="sí" required> Sí</label>
-          <label><input type="radio" name="expectativas" value="no"> No</label>
-        </div>
-
-        <label>Si no, ¿por qué?</label>
-        <textarea name="por_que_no_expectativas" rows="2"></textarea>
-
-        <label>¿El material de la cajita es adecuado?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="material" value="sí" required> Sí</label>
-          <label><input type="radio" name="material" value="no"> No</label>
-        </div>
-
-        <label>Si no, ¿qué cambiarías?</label>
-        <textarea name="cambios_material" rows="2"></textarea>
-      </section>
-
-      <section>
-        <h3>2. Satisfacción General</h3>
-
-        <label>¿Cómo calificarías tu satisfacción general? (1 a 10)</label>
-        <input type="number" name="satisfaccion_general" min="1" max="10" required>
-
-        <label>¿Qué fue lo que más te gustó?</label>
-        <textarea name="lo_que_mas_gusto" rows="2"></textarea>
-
-        <label>¿Hay algo que mejorarías?</label>
-        <textarea name="que_mejorarias" rows="2"></textarea>
-      </section>
-
-      <section>
-        <h3>3. Recomendaciones</h3>
-
-        <label>¿Recomendarías nuestras cajitas a otras personas?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="recomienda" value="sí" required> Sí</label>
-          <label><input type="radio" name="recomienda" value="no"> No</label>
-        </div>
-
-        <label>¿Qué otras temáticas te gustaría ver en nuestras cajitas?</label>
-        <textarea name="tematicas_sugeridas" rows="2"></textarea>
-      </section>
-
-      <section>
-        <h3>4. Datos opcionales</h3>
-
-        <label>Tu nombre (opcional)</label>
-        <input type="text" name="nombre_usuario">
-
-        <label>Tu correo (opcional)</label>
-        <input type="text" name="correo_usuario">
-      </section>
-
-      <button type="submit">Enviar respuestas</button>
-    </form>
-  </div>
-
-  <script>
-    // document.getElementById("encuesta-form").addEventListener("submit", function(e) {
-    //   e.preventDefault();
-
-    //   emailjs.sendForm('service_i3tcowf', 'template_i3u2tbk', this)
-    //     .then(function() {
-    //       alert("¡Formulario enviado con éxito!");
-    //       document.getElementById("encuesta-form").reset();
-    //     }, function(error) {
-    //       alert("Hubo un error al enviar el formulario.");
-    //       console.log(error);
-    //     });
-    // });
-
-
-    document.getElementById("encuesta-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  emailjs.sendForm('service_i3tcowf', 'template_i3u2tbk', this)
-    .then(function() {
-      Swal.fire({
-        icon: 'success',
-        title: '¡Gracias!',
-        text: 'Formulario enviado con éxito.',
-        confirmButtonColor: '#f8b500'
-      });
-      document.getElementById("encuesta-form").reset();
-    }, function(error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Hubo un error al enviar el formulario.',
-        footer: 'Inténtalo más tarde o revisa tu conexión.'
-      });
-      console.log(error);
-    });
-});
-
-  </script>
-</body>
+          emailjs.sendForm("service_i3tcowf", "template_i3u2tbk", this).then(
+            function () {
+              Swal.fire({
+                icon: "success",
+                title: "¡Gracias!",
+                text: "Formulario enviado con éxito.",
+                confirmButtonColor: "#f8b500",
+              });
+              document.getElementById("encuesta-form").reset();
+            },
+            function (error) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Hubo un error al enviar el formulario.",
+                footer: "Inténtalo más tarde o revisa tu conexión.",
+              });
+              console.log(error);
+            }
+          );
+        });
+    </script>
+  </body>
 </html>
