@@ -148,6 +148,31 @@
         justify-content: center;
         align-items: center;
       }
+
+      /* Estilo para las opciones de productos */
+      .producto-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .producto-label {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+      }
+
+      .producto-img {
+        width: 90px; /* Ajusta el tamaño de la imagen */
+        height: 90px; /* Ajusta el tamaño de la imagen */
+        margin-right: 10px; /* Espacio entre la imagen y el texto */
+        border-radius: 5px; /* Bordes redondeados para las imágenes */
+        object-fit: cover; /* Asegura que la imagen se recorte bien si no tiene la misma proporción */
+      }
+
+      .producto-label input[type="checkbox"] {
+        margin-right: 10px; /* Espacio entre el checkbox y la imagen */
+      }
     </style>
   </head>
   <body>
@@ -162,7 +187,68 @@
 
       <form id="encuesta-form">
         <section>
-          <h3>1. Calidad del Producto</h3>
+          <h3>1. Productos adquiridos</h3>
+          <label
+            >¿Con cuál producto hiciste parte de esta temporada especial?</label
+          >
+
+          <!-- Opción 1 con imagen -->
+          <div class="producto-option">
+            <label class="producto-label">
+              <input type="checkbox" name="producto" value="Caja mamá Pro" />
+              <img
+                src="assets/caja_mamapro.jpeg"
+                alt="Producto 1"
+                class="producto-img" />
+              Caja mamá Pro
+            </label>
+          </div>
+
+          <!-- Opción 2 con imagen -->
+          <div class="producto-option">
+            <label class="producto-label">
+              <input type="checkbox" name="producto" value="Caja mamá dulce" />
+              <img
+                src="assets/caja_mamadulce.jpeg"
+                alt="Producto 2"
+                class="producto-img" />
+              Caja mamá dulce
+            </label>
+          </div>
+
+          <!-- Opción 3 con imagen -->
+          <div class="producto-option">
+            <label class="producto-label">
+              <input
+                type="checkbox"
+                name="producto"
+                value="Caja mamá coquette" />
+              <img
+                src="assets/caja_mamacoquete.jpeg"
+                alt="Producto 3"
+                class="producto-img" />
+              Caja mamá coquette
+            </label>
+          </div>
+
+          <!-- Opción 4 con imagen -->
+          <div class="producto-option">
+            <label class="producto-label">
+              <input
+                type="checkbox"
+                name="producto"
+                value="Caja mamá con esencia" />
+              <img
+                src="assets/caja_mamaconesencia.jpeg"
+                alt="Producto 4"
+                class="producto-img" />
+              Caja mamá con esencia
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>2. Calidad del Producto</h3>
 
           <label>¿Cómo calificarías la calidad del producto? (1 a 10)</label>
           <input type="number" name="calidad" min="1" max="10" required />
@@ -181,12 +267,12 @@
 
           <label>¿La cajita cumple con tus expectativas?</label>
           <div class="radio-group">
-            <label
-              ><input type="radio" name="expectativas" value="sí" required />
+            <label>
+              <input type="radio" name="expectativas" value="sí" required />
               Sí</label
             >
-            <label
-              ><input type="radio" name="expectativas" value="no" /> No</label
+            <label>
+              <input type="radio" name="expectativas" value="no" /> No</label
             >
           </div>
 
@@ -195,8 +281,8 @@
 
           <label>¿El material de la cajita es adecuado?</label>
           <div class="radio-group">
-            <label
-              ><input type="radio" name="material" value="sí" required />
+            <label>
+              <input type="radio" name="material" value="sí" required />
               Sí</label
             >
             <label><input type="radio" name="material" value="no" /> No</label>
@@ -207,7 +293,7 @@
         </section>
 
         <section>
-          <h3>2. Satisfacción General</h3>
+          <h3>3. Satisfacción General</h3>
 
           <label>¿Cómo calificarías tu satisfacción general? (1 a 10)</label>
           <input
@@ -225,16 +311,16 @@
         </section>
 
         <section>
-          <h3>3. Recomendaciones</h3>
+          <h3>4. Recomendaciones</h3>
 
           <label>¿Recomendarías nuestras cajitas a otras personas?</label>
           <div class="radio-group">
-            <label
-              ><input type="radio" name="recomienda" value="sí" required />
+            <label>
+              <input type="radio" name="recomienda" value="sí" required />
               Sí</label
             >
-            <label
-              ><input type="radio" name="recomienda" value="no" /> No</label
+            <label>
+              <input type="radio" name="recomienda" value="no" /> No</label
             >
           </div>
 
@@ -245,7 +331,7 @@
         </section>
 
         <section>
-          <h3>4. Datos opcionales</h3>
+          <h3>5. Datos opcionales</h3>
 
           <label>Tu nombre (opcional)</label>
           <input type="text" name="nombre_usuario" />
@@ -259,32 +345,81 @@
     </div>
 
     <script>
-      // document.getElementById("encuesta-form").addEventListener("submit", function(e) {
-      //   e.preventDefault();
+      const codigosDescuento = [
+        "PLTB0000035",
+        "PLTB0000046",
+        "PLTB000023",
+        "PLTB000083",
+        "PLTB000098",
+        "PLTB000067",
+      ];
 
-      //   emailjs.sendForm('service_i3tcowf', 'template_i3u2tbk', this)
-      //     .then(function() {
-      //       alert("¡Formulario enviado con éxito!");
-      //       document.getElementById("encuesta-form").reset();
-      //     }, function(error) {
-      //       alert("Hubo un error al enviar el formulario.");
-      //       console.log(error);
-      //     });
-      // });
+      // Función para obtener un código de descuento aleatorio
+      function obtenerCodigo() {
+        // Verificar si ya se asignó un código de descuento
+        let codigo;
+        if (codigosDescuento.length > 0) {
+          const randomIndex = Math.floor(
+            Math.random() * codigosDescuento.length
+          );
+          codigo = codigosDescuento[randomIndex];
+          // Eliminar el código asignado del arreglo
+          codigosDescuento.splice(randomIndex, 1);
+        } else {
+          // Si ya no quedan códigos, mostrar un mensaje
+          codigo = "No quedan más códigos disponibles.";
+        }
+        return codigo;
+      }
 
       document
         .getElementById("encuesta-form")
         .addEventListener("submit", function (e) {
           e.preventDefault();
 
+          // Verificar si ya se ha enviado el formulario
+          if (localStorage.getItem("formSubmitted") === "true") {
+            Swal.fire({
+              icon: "info",
+              title: "Ya has participado",
+              text: "Ya has enviado el formulario y recibido tu código de descuento.",
+            });
+            return;
+          }
+
+          // Obtener las opciones seleccionadas de productos
+          const selectedProducts = [];
+          const checkboxes = document.querySelectorAll(
+            'input[name="producto"]:checked'
+          );
+          checkboxes.forEach((checkbox) => {
+            selectedProducts.push(checkbox.value);
+          });
+
+          // Si no hay productos seleccionados, poner un mensaje de "ninguno seleccionado"
+          const productos =
+            selectedProducts.length > 0
+              ? selectedProducts.join(", ")
+              : "Ninguno seleccionado";
+
+          // Generar código de descuento
+          const codigoDescuento = obtenerCodigo();
+
+          // Marcar que el formulario ha sido enviado
+          localStorage.setItem("formSubmitted", "true");
+
+          // Enviar el formulario utilizando EmailJS
           emailjs.sendForm("service_i3tcowf", "template_i3u2tbk", this).then(
             function () {
+              // Mostrar mensaje con el código de descuento
               Swal.fire({
                 icon: "success",
-                title: "¡Gracias!",
-                text: "Formulario enviado con éxito.",
+                title: "¡Gracias por participar!",
+                text: `Tu código de descuento es: ${codigoDescuento}. Utilízalo para obtener un 5% de descuento en tu próxima compra.`,
                 confirmButtonColor: "#f8b500",
               });
+
+              // Resetear el formulario
               document.getElementById("encuesta-form").reset();
             },
             function (error) {
